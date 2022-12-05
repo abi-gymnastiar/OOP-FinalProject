@@ -12,8 +12,8 @@ import java.util.Random;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
 //    int scene[][];
 
     public TileManager(GamePanel gp)
@@ -30,12 +30,20 @@ public class TileManager {
          try{
              tile[1] = new Tile();
              tile[1].image = ImageIO.read(getClass().getResourceAsStream("/Assets/Tile/wall01.png"));
+             tile[1].collision = true;
 
              tile[2] = new Tile();
              tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Assets/Tile/wall02.png"));
+             tile[2].collision = true;
+
+             tile[3] = new Tile();
+             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/Assets/Tile/tile_green.png"));
+             tile[3].collision = false;
 
              tile[0] = new Tile();
              tile[0].image = ImageIO.read(getClass().getResourceAsStream("/Assets/Tile/tile_green.png"));
+             tile[0].collision = false;
+
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -47,22 +55,6 @@ public class TileManager {
             InputStream is = getClass().getResourceAsStream("/Assets/maps/map00.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-//            scene = new int[][]{
-//                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,0,2,0,2,0,2,0,2,0,2,0,2,0,2,0,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,0,2,0,2,0,2,0,2,0,2,0,2,0,2,0,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,0,2,0,2,0,2,0,2,0,2,0,2,0,2,0,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,0,2,0,2,0,2,0,2,0,2,0,2,0,2,0,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,0,2,0,2,0,2,0,2,0,2,0,2,0,2,0,1},
-//                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-//                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-//            };
-
             int col = 0, row = 0;
 
             while(col < gp.maxScreenRow)
@@ -73,6 +65,8 @@ public class TileManager {
                 {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
+
+                    //to create randomize breakable walls
                     if(num == 0 && new Random().nextInt(10)<5)
                     {
                         num = 2;
