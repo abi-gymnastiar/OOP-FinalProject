@@ -9,19 +9,22 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity{
-
-    GamePanel gp;
     KeyInputHandler keyH;
+    public boolean bombPlaced;
+    public int bombX, bombY;
+    BufferedImage bombImage, tempbombImage;
+    public int bombCounter;
 
     public Player(GamePanel gp, KeyInputHandler keyH)
     {
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         solidArea = new Rectangle(8, 4, 29, 40);
 
         setDefaultValues();
         getPlayerImage();
+        getBombImage();
     }
     public void setDefaultValues()
     {
@@ -29,6 +32,16 @@ public class Player extends Entity{
         y = gp.tileSize;
         speed = 4;
         direction = "down";
+        bombPlaced = false;
+    }
+
+    public void getBombImage()
+    {
+        try {
+            tempbombImage = ImageIO.read(getClass().getResourceAsStream("/Assets/Player/bomb_01.png"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void getPlayerImage()
@@ -96,6 +109,25 @@ public class Player extends Entity{
             }
         }
 
+        if (keyH.spacePressed == true)
+        {
+            bombPlaced = true;
+            bombX = x;
+            bombY = y;
+            bombCounter = 0;
+        }
+        if (bombPlaced)
+        {
+            bombCounter++;
+            if(bombCounter > 60*2)
+            {
+                bombImage = null;
+            }
+            else {
+                bombImage = tempbombImage;
+            }
+        }
+
     }
     public void draw(Graphics2D g2)
     {
@@ -139,6 +171,9 @@ public class Player extends Entity{
                 break;
         }
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        if (bombPlaced == true)
+        {
+            g2.drawImage(bombImage, bombX, bombY, gp.tileSize, gp.tileSize, null);
+        }
     }
-
 }

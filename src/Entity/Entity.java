@@ -1,10 +1,12 @@
 package Entity;
 
+import Main.GamePanel;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Entity {
-
+public abstract class Entity {
+    public GamePanel gp;
     public int x, y;
     public int speed;
 
@@ -16,4 +18,9 @@ public class Entity {
     public boolean moving = false;
     public Rectangle solidArea;
     public boolean collisionOn = false;
+
+    public Entity(GamePanel gp)
+    {
+        this.gp = gp;
+    }
 }

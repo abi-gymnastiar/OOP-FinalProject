@@ -1,6 +1,7 @@
 package Main;
 
 import Entity.Player;
+import GameUI.TitleScreen;
 import Tile.TileManager;
 
 import javax.swing.JPanel;
@@ -12,6 +13,8 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTileSize = 16;
     final int tileScaling = 3;
 
+    public GameState gameState = GameState.TITLE_STATE;
+
     public final int tileSize = originalTileSize * tileScaling;
     public final int maxScreenColumn = 17, maxScreenRow = 13;
     public final int screenWidth = tileSize * maxScreenColumn;
@@ -20,11 +23,13 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     final int fps = 60;
 
-    TileManager tileManager = new TileManager(this);
     KeyInputHandler keyH = new KeyInputHandler();
+    Player player1 = new Player(this, keyH);
+    TileManager tileManager = new TileManager(this, keyH, player1);
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    Player player1 = new Player(this, keyH);
+
+    TitleScreen titleScreen = new TitleScreen(this, keyH);
 
     public GamePanel()
     {
@@ -75,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update()
     {
         player1.update();
+        tileManager.update();
     }
 
     public void paintComponent(Graphics g)
@@ -82,9 +88,18 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        tileManager.draw(g2);
+        if (gameState == GameState.TITLE_STATE)
+        {
+            titleScreen.draw(g2);
+        }
 
-        player1.draw(g2);
+        else
+        {
+            tileManager.draw(g2);
+
+            player1.draw(g2);
+
+        }
 
         g2.dispose();
     }
