@@ -126,6 +126,8 @@ public class Player extends Entity{
             else {
                 bombImage = tempbombImage;
             }
+            if(bombCounter >60*3)
+                bombPlaced = false;
         }
 
     }

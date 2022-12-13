@@ -2,14 +2,21 @@ package Main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import Tile.TileManager;
+
 
 public class KeyInputHandler implements KeyListener
 {
+    public int spacePressedCount = 1;
     public boolean upPressed, downPressed, leftPressed, rightPressed,
-            arrowdownPressed, arrowupPressed, enterPressed, spacePressed;
+            arrowdownPressed, arrowupPressed, enterPressed, spacePressed, pressedmaybe;
     @Override
     public void keyTyped(KeyEvent e) {
-
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_SPACE)
+        {
+            pressedmaybe = true;
+        }
     }
 
     @Override
