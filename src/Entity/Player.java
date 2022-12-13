@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Player extends Entity{
+public class Player extends Entity implements Renderer {
     KeyInputHandler keyH;
     public boolean bombPlaced;
     public int bombX, bombY;
@@ -131,10 +131,9 @@ public class Player extends Entity{
         }
 
     }
+    @Override
     public void draw(Graphics2D g2)
     {
-//        g2.setColor(Color.white);
-//        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 
         BufferedImage image = null;
 

@@ -29,13 +29,8 @@ public class TileManager {
     public int bombRow;
     public int bombRadUpRow, bombRadUpCol, bombRadRightRow, bombRadRightCol,
             bombRadLeftRow, bombRadLeftCol, bombRadDownRow, bombRadDownCol;
-    int explosionCounter;
-    int explosionIndexMid, explosionIndexLeft,explosionIndexRight, explosionIndexUp, explosionIndexDown;
-    public int arrayListBound;
     public ArrayList<Explosions> explosions = new ArrayList<>();
     public int arrayIndex;
-
-//    int scene[][];
 
     public TileManager(GamePanel gp, KeyInputHandler keyH, Player player01)
     {
@@ -49,9 +44,6 @@ public class TileManager {
         isExploding = false;
         arrayIndex = -1;
         i=0;
-//        for (int i = 0; i < 5; i++) {
-//
-//        }
     }
 
     public void getTileImage()
@@ -139,41 +131,6 @@ public class TileManager {
 
     public void update()
     {
-//        if(player01.bombPlaced)
-//        {
-//            if (player01.bombCounter > 60*2)
-//            {
-//                bombCollumn = player01.bombX / gp.tileSize;
-//                bombRow=player01.bombY / gp.tileSize;
-//
-//                //left radius
-//                bombRadLeftCol=bombCollumn - 1;
-//                bombRadLeftRow=bombRow;
-//                //right radius
-//                bombRadRightCol=bombCollumn + 1;
-//                bombRadRightRow=bombRow;
-//                //up radius
-//                bombRadUpCol=bombCollumn;
-//                bombRadUpRow=bombRow - 1;
-//                //down radius
-//                bombRadDownCol=bombCollumn;
-//                bombRadDownRow=bombRow + 1;
-//
-//                if(explosion == null) {
-//                    explosion = new Explosions
-//                            (bombCollumn, bombRow, bombRadUpRow, bombRadUpCol,
-//                                    bombRadRightRow, bombRadRightCol, bombRadLeftRow,
-//                                    bombRadLeftCol,  bombRadDownRow, bombRadDownCol);
-//                }
-//            }
-//        }
-//        if(!player01.bombPlaced)
-//        {
-//            if (player01.bombCounter > 60*2 + 30)
-//            {
-//                explosion.setIndexToZero();
-//            }
-//        }
         if(player01.bombPlaced && !isExploding)
         {
             isExploding = true;
