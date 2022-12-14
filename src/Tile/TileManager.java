@@ -24,6 +24,8 @@ public class TileManager {
     int i;
 
     Explosions explosion;
+//    ArrayList<Integer> explodedAreaMidCol;
+//    ArrayList<Integer> explodedAreaMidRow;
 
     public int bombCollumn;
     public int bombRow;
@@ -32,6 +34,7 @@ public class TileManager {
     public ArrayList<Explosions> explosions = new ArrayList<>();
     public int arrayIndex;
 
+    int[] indexing = new int [5];
     public TileManager(GamePanel gp, KeyInputHandler keyH, Player player01)
     {
         this.gp = gp;
@@ -39,6 +42,8 @@ public class TileManager {
         this.player01 = player01;
         tile = new Tile[10];
         mapTileNum = new int[gp.maxScreenColumn][gp.maxScreenRow];
+//        explodedAreaMidRow = new ArrayList<>();
+//        explodedAreaMidCol = new ArrayList<>();
         getTileImage();
         LoadMap();
         isExploding = false;
@@ -175,36 +180,76 @@ public class TileManager {
             }
             isExploding = false;
         }
+        //System.out.println("array size: "+ explosions.size());
+        //System.out.println("array index: " + arrayIndex);
         //System.out.println(explosions.size());
         //System.out.println(keyH.spacePressedCount);
+        //System.out.println(indexing[0]);
     }
 
     public void draw(Graphics2D g2)
     {
+        ArrayList<Integer> explodedAreaMidCol = new ArrayList<>();
+        ArrayList<Integer> explodedAreaMidRow = new ArrayList<>();
+        ArrayList<Integer> explodedAreaUpCol = new ArrayList<>();
+        ArrayList<Integer> explodedAreaUpRow = new ArrayList<>();
+        ArrayList<Integer> explodedAreaLeftCol = new ArrayList<>();
+        ArrayList<Integer> explodedAreaLeftRow = new ArrayList<>();
+        ArrayList<Integer> explodedAreaRightCol = new ArrayList<>();
+        ArrayList<Integer> explodedAreaRightRow = new ArrayList<>();
+        ArrayList<Integer> explodedAreaDownCol = new ArrayList<>();
+        ArrayList<Integer> explodedAreaDownRow = new ArrayList<>();
+        boolean forActivator = false;
         int col = 0, row = 0, x = 0, y = 0;
+
+        indexing[0] = 0; indexing[1] = 0; indexing[2] = 0; indexing[3] = 0; indexing[4] = 0;
         while(col<gp.maxScreenColumn && row<gp.maxScreenRow)
         {
             int tileNum = mapTileNum[col][row];
 
             if(!explosions.isEmpty())
             {
-                if (col == explosions.get(0).getBombCollumn() &&
-                        row == explosions.get(0).getBombRow()) {
-                    tileNum = explosions.get(0).getExplosionIndexMid();
-                } else if (col == explosions.get(0).getBombRadLeftCol() &&
-                        row == explosions.get(0).getBombRadLeftRow()) {
-                    tileNum = explosions.get(0).getExplosionIndexLeft();
-                } else if (col == explosions.get(0).getBombRadRightCol() &&
-                        row == explosions.get(0).getBombRadRightRow()) {
-                    tileNum = explosions.get(0).getExplosionIndexRight();
-                } else if (col == explosions.get(0).getBombRadUpCol() &&
-                        row == explosions.get(0).getBombRadUpRow()) {
-                    tileNum = explosions.get(0).getExplosionIndexUp();
-                } else if (col == explosions.get(0).getBombRadDownCol() &&
-                        row == explosions.get(0).getBombRadDownRow()) {
-                    tileNum = explosions.get(0).getExplosionIndexDown();
+                if (col == explosions.get(indexing[0]).getBombRadUpCol() &&
+                        row == explosions.get(indexing[0]).getBombRadUpRow()) {
+                    System.out.println(indexing[0]);
+                    explodedAreaUpCol.add(col);
+                    explodedAreaUpRow.add(col);
+                    tileNum = explosions.get(indexing[0]).getExplosionIndexUp();
+                    forActivator = true;
+                }
+                if (col == explosions.get(indexing[1]).getBombRadLeftCol() &&
+                        row == explosions.get(indexing[1]).getBombRadLeftRow()) {
+                    explodedAreaLeftCol.add(col);
+                    explodedAreaLeftRow.add(col);
+                    tileNum = explosions.get(indexing[1]).getExplosionIndexLeft();
+                    forActivator = true;
+                }
+                //mid
+                if (col == explosions.get(indexing[2]).getBombCollumn() &&
+                        row == explosions.get(indexing[2]).getBombRow()) {
+                    tileNum = explosions.get(indexing[2]).getExplosionIndexMid();
+                    explodedAreaMidCol.add(col);
+                    explodedAreaMidRow.add(row);
+                    //System.out.println("size of are arr: " + explodedAreaMidCol.size());
+                    forActivator = true;
+                }
+
+                if (col == explosions.get(indexing[3]).getBombRadRightCol() &&
+                        row == explosions.get(indexing[3]).getBombRadRightRow()) {
+                    explodedAreaRightCol.add(col);
+                    explodedAreaRightRow.add(col);
+                    tileNum = explosions.get(indexing[3]).getExplosionIndexRight();
+                    forActivator = true;
+                }
+                if (col == explosions.get(indexing[4]).getBombRadDownCol() &&
+                        row == explosions.get(indexing[4]).getBombRadDownRow()) {
+                    explodedAreaDownCol.add(col);
+                    explodedAreaDownRow.add(col);
+                    tileNum = explosions.get(indexing[4]).getExplosionIndexDown();
+                    forActivator = true;
                 }
             }
+
             g2.drawImage(tile[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
 
             col++;

@@ -17,7 +17,6 @@ public class Explosions {
     private int explosionIndexRight;
     private int explosionIndexUp;
     private int explosionIndexDown;
-    public boolean isExploding;
     Explosions(int bombCollumn, int bombRow, int bombRadUpRow, int bombRadUpCol, int bombRadRightRow,
                int bombRadRightCol, int bombRadLeftRow, int bombRadLeftCol, int bombRadDownRow,
                int bombRadDownCol)
